@@ -2,7 +2,7 @@
 
 A simple command-line task manager built with Node.js. Track your tasks through three states: **todo**, **in-progress** and **done**. No dependencies required.
 
-This is a personal project: https://roadmap.sh/projects/task-tracker.
+https://roadmap.sh/projects/task-tracker
 
 ## Requirements
 
