@@ -130,7 +130,7 @@ function deleteTask(taskId) {
     let tasks = loadTasks();
     let tasksLength = tasks.length;
 
-    tasks = tasks.map(t => t.id !== taskId);
+    tasks = tasks.filter(t => t.id !== deleteTaskId);
     let newtasksLength = tasks.length;
     saveTasks(tasks);
 
