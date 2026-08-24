@@ -323,14 +323,42 @@ function formatDateTime(timestamp) {
 const [,, action, ...args] = process.argv;
 
 try {
-    let tasks = [];
-
     switch (action) {
         case 'add':
             addNewTask(args);
             break;
+        case 'update':
+            updateTaskDescription(args);
+            break;
         case 'delete':
             deleteTask(args);
+            break;
+        case 'mark-in-progress':
+            markTaskAsInProgress(args);
+            break;
+        case 'done':
+            markTaskAsDone(args);
+            break;
+        case 'list':
+            if (args.length == 0) {
+                printAllTask();
+                break;
+            }
+            
+            switch (args[0]) {
+                case 'todo':
+                    printTasksByStatus(TaskStatus.TODO);
+                    break;
+                case 'in-progress':
+                    printTasksByStatus(TaskStatus.IN_PROGRESS);
+                    break;
+                case 'done':
+                    printTasksByStatus(TaskStatus.DONE);
+                    break;
+                default:
+                    console.log('Available list options: "todo", "in-progress" and "done".');
+                    break;
+            }
             break;
         default:
             break;
