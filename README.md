@@ -2,6 +2,8 @@
 
 A simple command-line task manager built with Node.js. Track your tasks through three states: **todo**, **in-progress** and **done**. No dependencies required.
 
+This is a personal project: https://github.com/gmcp-dev/Task-Tracker-CLI.
+
 ## Requirements
 
 - [Node.js](https://nodejs.org) **v20.11 or higher**.
