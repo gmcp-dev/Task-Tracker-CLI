@@ -111,7 +111,7 @@ function updateTaskDescription(args) {
 
 function deleteTask(taskId) {
     if (args.length == 0) {
-        console.log('You may add a task id. Usage: delete <task id>');
+        console.log('You may provide a task id. Usage: delete <task id>');
         return;
     }
 
@@ -123,7 +123,7 @@ function deleteTask(taskId) {
     }
 
     if (args.length < 2 || args[1] !== '--confirm') {
-        console.log('To confirm the deletion of this task, type next to task id "--confirm". Usage: delete <task id> --confirm');
+        console.log(`To confirm the deletion of this task, type next to task id "--confirm". Usage: delete <task id> --confirm`);
         return;
     }
 
