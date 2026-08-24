@@ -297,6 +297,29 @@ function getNewId() {
     }
 }
 
+function formatDateTime(timestamp) {
+    const time = new Date(timestamp);
+    const diffMin = Math.floor((Date.now() - timestamp) / 60000);
+    const diffHours = Math.floor(diffMin / 60);
+
+    if (diffMin < 60) return `Hace ${Math.max(diffMin, 0)}m`;
+    if (diffHours < 24) return `Hace ${diffHours}m`;
+
+    if (diffHours < (24 * 7)) {
+        return new Intl.DateTimeFormat("es", {
+            weekday: "long",
+            hour: "2-digit",
+            minute: "2-digit",
+        }).format(time);
+    }
+
+    return new Intl.DateTimeFormat("es", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    }).format(time);
+}
+
 const [,, action, ...args] = process.argv;
 
 try {
