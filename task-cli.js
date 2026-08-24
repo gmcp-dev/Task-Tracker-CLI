@@ -67,6 +67,48 @@ function addNewTask(args) {
     console.log(`New task added with ID: ${newTask.id}.`);
 }
 
+function updateTaskDescription(args) {
+    if (args.length < 2) {
+        console.log('You may provide a task id. Usage: update <task id> <new description>');
+        return;
+    }
+
+    let [taskId, newDescription] = args;
+    taskId = Number(taskId);
+
+    let taskFound = false;
+    let updated = false;
+    const allTasks = loadTasks();
+
+    for (const task of allTasks) {
+        if (task.id === taskId) {
+            if (task.description !== newDescription) {
+                task.description = newDescription;
+                task.updateAt = Date.now();
+
+                updated = true;
+            }
+
+            taskFound = true;
+            break;
+        }
+    }
+
+    if (!taskFound) {
+        console.log(`The task with ID ${taskId} doesn't exists`);
+        return;
+    }
+
+    if (!updated) {
+        console.log(`The task with ID ${taskId} has already this description, nothing has changed.`);
+        return;
+    }
+
+    saveTasks(allTasks);
+
+    console.log(`You update the task ID ${taskId}. Before: "${lastDescription}" | After: "${newDescription}"`);
+}
+
 function deleteTask(taskId) {
     if (args.length == 0) {
         console.log('You may add a task id. Usage: delete <task id>');
@@ -100,6 +142,143 @@ function deleteTask(taskId) {
     }
 
     console.log(`The task with ID ${rawTaskId} was deleted.`);
+}
+
+function markTaskAsInProgress(args) {
+    if (args.length == 0) {
+        console.log('You may provide a task id to mark as in progress. Usage: mark-in-progress <task id>');
+        return;
+    }
+
+    let taskId = Number(args[0]);
+    if (isNaN(taskId)) {
+        console.log('You may provide a valid task id (number). Usage: mark-in-progress <task id>');
+        return;
+    }
+
+    let taskFound = false;
+    let updated = false;
+    const allTasks = loadTasks();
+
+    for (const task of allTasks) {
+        if (task.id === taskId) {
+            if (task.status !== TaskStatus.IN_PROGRESS) {
+                task.status = TaskStatus.IN_PROGRESS;
+                task.updateAt = Date.now();
+
+                updated = true;
+            }
+            
+            taskFound = true;
+            break;
+        }
+    }
+
+    if (!taskFound) {
+        console.log(`The task with ID ${taskId} doesn't exists.`);
+        return;
+    }
+
+    if (!updated) {
+        console.log(`The task with ID ${taskId} is already marked as in progress, nothing has changed.`);
+        return;
+    }
+
+    saveTasks(allTasks);
+
+    console.log(`The task with ID ${taskId} has been marked as in progress.`);
+}
+
+function markTaskAsDone(args) {
+    if (args.length == 0) {
+        console.log('You may provide a task id to mark as done. Usage: done <task id>');
+        return;
+    }
+
+    let taskId = Number(args[0]);
+    if (isNaN(taskId)) {
+        console.log('You may provide a valid task id (number). Usage: done <task id>');
+        return;
+    }
+
+    let taskFound = false;
+    let updated = false;
+    const allTasks = loadTasks();
+
+    for (const task of allTasks) {
+        if (task.id === taskId) {
+            if (task.status !== TaskStatus.DONE) {
+                task.status = TaskStatus.DONE;
+                task.updateAt = Date.now();
+
+                updated = true;
+            }
+            
+            taskFound = true;
+            break;
+        }
+    }
+
+    if (!taskFound) {
+        console.log(`The task with ID ${taskId} doesn't exists.`);
+        return;
+    }
+
+    if (!updated) {
+        console.log(`The task with ID ${taskId} is already marked as done, nothing has changed.`);
+        return;
+    }
+
+    saveTasks(allTasks);
+
+    console.log(`The task with ID ${taskId} has been marked as done.`);
+}
+
+function printAllTask() {
+    const allTasks = loadTasks();
+
+    if(allTasks.length == 0) {
+        console.log('You haven\'t added any tasks yet!');
+        return;
+    }
+
+    allTasks.sort((a, b) => {
+        if (a.status === TaskStatus.TODO && b.status !== TaskStatus.TODO) return -1;
+        if (b.status === TaskStatus.TODO && a.status !== TaskStatus.TODO) return 1;
+
+        if (a.status === TaskStatus.IN_PROGRESS && b.status !== TaskStatus.IN_PROGRESS) return -1;
+        if (b.status === TaskStatus.IN_PROGRESS && a.status !== TaskStatus.IN_PROGRESS) return 1;
+
+        return 0;
+    });
+
+    console.log('================= ALL TASK =================');
+    for (const task of allTasks) {
+        const { id, description, status, createdAt, updatedAt } = task;
+        const timeLabeled = formatDateTime(createdAt);
+        
+        console.log(`Id: ${id} | Task: "${description}" | Status: ${status} | Created: ${timeLabeled} ${(updatedAt ? `| Modified: ${formatDateTime(updatedAt)}` : '')}`);
+    }
+}
+
+function printTasksByStatus(status) {
+    /**
+     * @type {any[]}
+     */
+    const allTasks = loadTasks().filter(t => t.status === status);
+
+    if(allTasks.length == 0) {
+        console.log('There are not TODO tasks');
+        return;
+    }
+
+    console.log(`================= ${status.replace('-', ' ').toUpperCase()} =================`);
+    for (const task of allTasks) {
+        const { id, description, status, createdAt, updatedAt } = task;
+        const timeLabeled = formatDateTime(createdAt)
+
+        console.log(`Id: ${id} | Task: "${description}" | Status: ${status} | Created: ${timeLabeled} ${(updatedAt ? `| Modified: ${formatDateTime(updatedAt)}` : '')}`);
+    }
 }
 
 function getNewId() {
