@@ -78,11 +78,14 @@ function updateTaskDescription(args) {
 
     let taskFound = false;
     let updated = false;
+    let lastDescription = null;
     const allTasks = loadTasks();
 
     for (const task of allTasks) {
         if (task.id === taskId) {
             if (task.description !== newDescription) {
+                lastDescription = task.description;
+
                 task.description = newDescription;
                 task.updatedAt = Date.now();
 
