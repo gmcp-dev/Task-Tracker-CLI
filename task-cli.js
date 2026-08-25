@@ -58,7 +58,7 @@ function addNewTask(args) {
         description: args[0], 
         status: TaskStatus.TODO, 
         createdAt: Date.now(),
-        updateAt: null
+        updatedAt: null
     };
 
     tasks.push(newTask);
@@ -84,7 +84,7 @@ function updateTaskDescription(args) {
         if (task.id === taskId) {
             if (task.description !== newDescription) {
                 task.description = newDescription;
-                task.updateAt = Date.now();
+                task.updatedAt = Date.now();
 
                 updated = true;
             }
@@ -164,7 +164,7 @@ function markTaskAsInProgress(args) {
         if (task.id === taskId) {
             if (task.status !== TaskStatus.IN_PROGRESS) {
                 task.status = TaskStatus.IN_PROGRESS;
-                task.updateAt = Date.now();
+                task.updatedAt = Date.now();
 
                 updated = true;
             }
@@ -209,7 +209,7 @@ function markTaskAsDone(args) {
         if (task.id === taskId) {
             if (task.status !== TaskStatus.DONE) {
                 task.status = TaskStatus.DONE;
-                task.updateAt = Date.now();
+                task.updatedAt = Date.now();
 
                 updated = true;
             }
