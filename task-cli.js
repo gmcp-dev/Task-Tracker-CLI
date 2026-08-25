@@ -286,15 +286,9 @@ function printTasksByStatus(status) {
 
 function getNewId() {
     try {
-        let newId = 1;
-        let allTasks = loadTasks();
+        const allTasks = loadTasks();
 
-        for (const task of allTasks) {
-            if (task.id !== newId) break;
-            newId++;
-        }
-
-        return newId;
+        return allTasks.reduce((maxId, task) => Math.max(maxId, task.id), 0) + 1;
     } catch (error) {
         throw new Error(`Couldn't get a new id. Error: ${error.message}`);
     }
