@@ -300,7 +300,7 @@ function formatDateTime(timestamp) {
     const diffHours = Math.floor(diffMin / 60);
 
     if (diffMin < 60) return `Hace ${Math.max(diffMin, 0)}m`;
-    if (diffHours < 24) return `Hace ${diffHours}m`;
+    if (diffHours < 24) return `Hace ${diffHours}h`;
 
     if (diffHours < (24 * 7)) {
         return new Intl.DateTimeFormat("es", {
