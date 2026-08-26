@@ -12,8 +12,13 @@ const TaskStatus = Object.freeze({
 
 function loadTasks() {
     try {
+        const dataDir = join(_dirname, 'data');
+        if (!existsSync(dataDir)) {
+            mkdirSync(dataDir);
+        }
+
         const raw = readFileSync(tasksFile, 'utf8');
-        
+
         return JSON.parse(raw);
     } catch (error) {
         if (error.code === 'ENOENT') return [];
