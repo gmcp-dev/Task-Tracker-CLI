@@ -11,14 +11,28 @@ https://roadmap.sh/projects/task-tracker
 ## Installation
 
 ```bash
-git clone https://github.com/<your-user>/task-tracker-cli.git
+git clone https://github.com/gmcp-dev/Task-Tracker-CLI.git
 cd task-tracker-cli
+```
+
+Or
+
+```bash
+npm install -g git+https://github.com/gmcp-dev/Task-Tracker-CLI.git
+task-cli add "Mi tarea"
 ```
 
 ## Usage
 
 ```bash
 node task-cli.js <command> [arguments]
+```
+
+Or
+
+```bash
+# This makes that you can use "task-cli ..." instead
+npm link
 ```
 
 ### Commands
